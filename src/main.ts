@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 const port:number = parseInt(process.env.PORT) || 8080;
@@ -20,6 +20,9 @@ async function bootstrap() {
 
   SwaggerModule.setup('api-docs', app, doc);
 
+
+  // Validation
+  app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(port);
   Logger.log(`Server is ready on http://localhost:${port}`)
