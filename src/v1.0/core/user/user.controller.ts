@@ -39,6 +39,9 @@ export class UserController {
         return this.userService.deleteUser(id);
     }
 
-    
+    @Get(':id/pdf')
+    generatePDF(@Param('id') id:string):Promise<User>{
+        return this.userService.generatePDF(id);
+    }
     
 }

@@ -1,45 +1,50 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsString, Min, IsInt, IsOptional } from 'class-validator';
+import { IsString, Min, IsInt, IsOptional, IsEmail } from 'class-validator';
 
 export class UpdateUser{
 
-    @ApiProperty({
-        type: Boolean,
-        description: 'Indicates if the asset is visible or not'
-    })
-    @IsOptional()
-    isVisible: boolean;
-
-    
-    @ApiProperty({
-        type: Date,
-        description: 'Indicates if the asset is visible or not'
-    })
-    @IsOptional()
-    initialDate: string;
-    
-    @ApiProperty({
+    @ApiPropertyOptional({
         type: String,
-        description: 'Name of the asset',
+        description: 'Name of the user',
         default: ''
     })
+    @IsOptional()
     @IsString()
     name: string;
 
-    @ApiProperty({
-        type: Number,
-        description: 'Year when the asset was acquired',
-        default: 0
-    })
-    @IsInt()
-    year: number;
-    
     @ApiPropertyOptional({
-        type: Number,
-        description: 'Value of the asset. $ COP',
+        type: String,
+        description: 'Lastname of the user',
         default: ''
     })
-    @Min(1)
-    value: number;
+    @IsOptional()
+    @IsString()
+    lastname: string;
+
+    @ApiPropertyOptional({
+        type: String,
+        description: 'Email of the user',
+        default: ''
+    })
+    @IsOptional()
+    @IsString()
+    @IsEmail()
+    email: string;
+    
+    @ApiPropertyOptional({
+        type: Date,
+        description: 'Birthday of the user'
+    })
+    @IsOptional()
+    birthday: string;
+
+    @ApiPropertyOptional({
+        type: String,
+        description: 'Document number as string',
+        default: 0
+    })
+    @IsOptional()
+    @IsString()
+    documentNumber: string;
     
 }

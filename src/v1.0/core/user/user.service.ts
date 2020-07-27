@@ -5,11 +5,12 @@ import { ExtendedModel } from 'modules/mongo/ExtendedMongo';
 import { User } from './user.mg-document';
 import { CreateUser } from './dto/create-user.dto';
 import { UpdateUser } from './dto/update-user.dto';
+import { UserModel } from './user.model';
 
 @Injectable()
 export class UserService {
 
-    constructor(@InjectModel('User') private userModel: ExtendedModel<User>){}
+    constructor(@InjectModel('User') private userModel: UserModel<User>){}
 
     async getUsers(): Promise<User[]>
     {
@@ -40,5 +41,10 @@ export class UserService {
         const deletedObject = await this.userModel.softDelete(id);
         
         return deletedObject;
+    }
+
+    async generatePDF(id:string):Promise<User>
+    {
+        return await this.userModel.generatePDF(id);
     }
 }

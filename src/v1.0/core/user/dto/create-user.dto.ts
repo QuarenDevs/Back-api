@@ -3,41 +3,43 @@ import { IsString, Min, IsInt } from 'class-validator';
 
 export class CreateUser{
 
-    @ApiProperty({
-        type: Boolean,
-        description: 'Indicates if the asset is visible or not'
-    })
-    isVisible: boolean;
-
-    
-    @ApiProperty({
-        type: Date,
-        description: 'Indicates if the asset is visible or not'
-    })
-    initialDate: string;
     
     @ApiProperty({
         type: String,
-        description: 'Name of the asset',
+        description: 'Name of the user',
         default: ''
     })
     @IsString()
     name: string;
 
     @ApiProperty({
-        type: Number,
-        description: 'Year when the asset was acquired',
-        default: 0
-    })
-    @IsInt()
-    year: number;
-    
-    @ApiPropertyOptional({
-        type: Number,
-        description: 'Value of the asset. $ COP',
+        type: String,
+        description: 'Lastname of the user',
         default: ''
     })
-    @Min(1)
-    value: number;
+    @IsString()
+    lastname: string;
+
+    @ApiProperty({
+        type: String,
+        description: 'Email of the user',
+        default: ''
+    })
+    @IsString()
+    email: string;
+    
+    @ApiProperty({
+        type: Date,
+        description: 'Birthday of the user'
+    })
+    birthday: string;
+
+    @ApiProperty({
+        type: String,
+        description: 'Document number as string',
+        default: 0
+    })
+    @IsString()
+    documentNumber: string;
     
 }
