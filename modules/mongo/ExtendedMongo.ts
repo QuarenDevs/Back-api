@@ -11,7 +11,6 @@ export interface ExtendedModel<T extends Document> extends Model<T>
     store(dto:any) : Promise<T>;
     updateBySID(sid:string, dto:any): Promise<T>;
     softDelete(sid:string) : Promise<T>;
-
 }
 
 export function createSchema(mgDocument:Type<unknown>) :Schema{

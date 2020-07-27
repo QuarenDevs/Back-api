@@ -18,7 +18,7 @@ async function bootstrap() {
   
   const doc = SwaggerModule.createDocument(app, swaggerConfig);
 
-  SwaggerModule.setup('api-docs', app, doc);
+  SwaggerModule.setup('api-docs/v1.0', app, doc, {customSiteTitle:'API - App de emprendimiento', swaggerOptions:{docExpansion:'none'}});
 
 
   // Validation
