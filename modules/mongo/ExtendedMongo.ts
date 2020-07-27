@@ -1,4 +1,4 @@
-import { Model, Document, Schema,  Mongoose, SchemaType, SchemaTypes, SchemaTypeOpts } from "mongoose";
+import { Model, Document, Schema, SchemaTypes } from "mongoose";
 import { SchemaFactory, Prop } from "@nestjs/mongoose";
 import { Type, HttpException, HttpStatus } from '@nestjs/common';
 import { generate as generateSID } from 'shortid';
@@ -8,6 +8,7 @@ export interface ExtendedModel<T extends Document> extends Model<T>
 {
     getAll() : Promise<T[]>;
     findBySID(sid:string) : Promise<T>;
+    store(dto:any) : Promise<T>;
     updateBySID(sid:string, dto:any): Promise<T>;
     softDelete(sid:string) : Promise<T>;
 
@@ -35,7 +36,7 @@ export function createSchema(mgDocument:Type<unknown>) :Schema{
     }
     
     schema.add({
-      sid: {type: String, default: generateSID()},
+      sid: {type: String, default: null},
       createdBy:createdBy,//{ type: SchemaTypes.ObjectId, default:null },
       deletedAt: {type: String, default: null}
     })
@@ -52,6 +53,12 @@ export function createSchema(mgDocument:Type<unknown>) :Schema{
         }
         return foundDocument;
     };
+    schema.statics.store = async function(dto:any): Promise<Type<unknown>>{
+        dto.sid = generateSID();
+        const newObject = new this(dto);
+        
+        return await newObject.save();
+    }
     schema.statics.updateBySID = async function (sid: string, dto:any): Promise<Array<Type<unknown>>> {
         const updatedObject = await this.findOneAndUpdate({sid: sid, deletedAt:null}, dto, {new: true});
             if(!updatedObject)
@@ -65,6 +72,16 @@ export function createSchema(mgDocument:Type<unknown>) :Schema{
         return  await this.findOneAndUpdate({sid: sid}, {deletedAt: new Date().toISOString()}, {new: true});
             
     };
+
+    /*
+    schema.pre('save', function(next) {
+        if(this.sid == undefined || this.sid)
+        {
+            
+        }
+        next();
+    });
+    */
     return schema;
 }
 
