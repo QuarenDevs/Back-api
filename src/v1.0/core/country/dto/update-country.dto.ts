@@ -3,43 +3,22 @@ import { IsString, Min, IsInt, IsOptional } from 'class-validator';
 
 export class UpdateCountry{
 
-    @ApiProperty({
-        type: Boolean,
-        description: 'Indicates if the asset is visible or not'
-    })
-    @IsOptional()
-    isVisible: boolean;
-
-    
-    @ApiProperty({
-        type: Date,
-        description: 'Indicates if the asset is visible or not'
-    })
-    @IsOptional()
-    initialDate: string;
-    
-    @ApiProperty({
+    @ApiPropertyOptional({
         type: String,
-        description: 'Name of the asset',
+        description: 'Name of the country',
         default: ''
     })
+    @IsOptional()
     @IsString()
     name: string;
 
-    @ApiProperty({
-        type: Number,
-        description: 'Year when the asset was acquired',
-        default: 0
-    })
-    @IsInt()
-    year: number;
-    
     @ApiPropertyOptional({
         type: Number,
-        description: 'Value of the asset. $ COP',
-        default: ''
+        description: 'Calling code of the country',
+        default: 0
     })
-    @Min(1)
-    value: number;
+    @IsOptional()
+    @IsInt()
+    callingCode: number;
     
 }
