@@ -1,6 +1,11 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "paths": {
+      "environment": ["src/environments/environment"],
+      "~modules/*": ["modules/*"],
+      "~libraries/*": ["externals/libraries/*"]
+    },
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
