@@ -3,43 +3,29 @@ import { IsString, Min, IsInt, IsOptional } from 'class-validator';
 
 export class UpdateMeasurementUnit{
 
-    @ApiProperty({
-        type: Boolean,
-        description: 'Indicates if the asset is visible or not'
-    })
-    @IsOptional()
-    isVisible: boolean;
-
-    
-    @ApiProperty({
-        type: Date,
-        description: 'Indicates if the asset is visible or not'
-    })
-    @IsOptional()
-    initialDate: string;
-    
-    @ApiProperty({
+    @ApiPropertyOptional({
         type: String,
-        description: 'Name of the asset',
+        description: 'Name of the measurement unit',
         default: ''
     })
+    @IsOptional()
     @IsString()
     name: string;
 
-    @ApiProperty({
-        type: Number,
-        description: 'Year when the asset was acquired',
-        default: 0
+    @ApiPropertyOptional({
+        type: String,
+        description: 'Symbol of the measurement unit'
     })
-    @IsInt()
-    year: number;
+    @IsOptional()
+    @IsString()
+    symbol: string;
     
     @ApiPropertyOptional({
-        type: Number,
-        description: 'Value of the asset. $ COP',
-        default: ''
+        type: String,
+        description: 'Base Quantity of the measurement unit (Time, Length, Mass, Electronic current, Thermodynamic Temperature, Amount of substance, Luminous intensity, among others)'
     })
-    @Min(1)
-    value: number;
+    @IsOptional()
+    @IsString()
+    baseQuantity: string;
     
 }
