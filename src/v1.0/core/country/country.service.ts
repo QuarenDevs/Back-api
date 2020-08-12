@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 //import { Model } from 'mongoose';
-import { ExtendedModel } from 'modules/mongo/ExtendedMongo';
+import { ExtendedModel, DocumentAncestor } from 'modules/mongo/ExtendedMongo';
 import { Country } from './country.mg-document';
 import { CreateCountry } from './dto/create-country.dto';
 import { UpdateCountry } from './dto/update-country.dto';
@@ -10,6 +10,13 @@ import { UpdateCountry } from './dto/update-country.dto';
 export class CountryService {
 
     constructor(@InjectModel('Country') private countryModel: ExtendedModel<Country>){}
+
+    async getAncestors(idCountry:string ):Promise<DocumentAncestor[]>
+    {
+        const country = await this.countryModel.findBySID(idCountry);
+        const ancestors:DocumentAncestor[] = [new DocumentAncestor(country)];
+        return ancestors;
+    }
 
     async getCountries(): Promise<Country[]>
     {

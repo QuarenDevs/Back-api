@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AssetModule } from './asset/asset.module';
+import { AccountingModule } from './accounting/accounting.module';
+
 
 @Module({
     imports:[
-        AssetModule
+        AccountingModule
+        
     ],
     controllers:[],
     providers:[]

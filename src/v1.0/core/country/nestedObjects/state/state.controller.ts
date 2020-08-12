@@ -11,21 +11,26 @@ export class StateController {
     
     modelName = 'State';
 
-    constructor(private stateService: StateService){}
+    constructor(
+        private stateService: StateService
+        ){}
 
     @Get()
     index(@Param('idCountry') idCountry:string): Promise<State[]>  {
-        return this.stateService.getStates();
+        //const countryParent = await this.getCountryParent(idCountry);
+        return this.stateService.getStates(idCountry);
     }
 
     @Get(':id')
     show(@Param('idCountry') idCountry:string, @Param('id') id:string):Promise<State>{
-        return this.stateService.getState(id);
+        //const countryParent = await this.getCountryParent(idCountry);
+        return this.stateService.getState(idCountry, id);
     }
 
     @Post()
     create(@Param('idCountry') idCountry:string, @Body() bodyParams: CreateState):Promise<State>{
-        return this.stateService.createState(bodyParams);
+        //const countryParent = await this.getCountryParent(idCountry);
+        return this.stateService.createState(idCountry, bodyParams);
     }
 
     

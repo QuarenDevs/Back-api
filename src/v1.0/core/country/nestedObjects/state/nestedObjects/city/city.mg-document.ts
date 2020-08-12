@@ -1,5 +1,6 @@
 import { Schema, Prop } from '@nestjs/mongoose';
 import { createSchema, ExtendedDocument } from 'modules/mongo/ExtendedMongo';
+import { Borough } from './nestedObjects/borough/borough.mg-document';
 
 
 
@@ -30,7 +31,8 @@ export class City extends ExtendedDocument{
     @Prop()
     isVisible: boolean;
 
-    
+    @Prop()
+    boroughs: [Borough];
 }
 
 //export const schema = SchemaFactory.createForClass(City);

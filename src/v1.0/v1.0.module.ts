@@ -1,11 +1,16 @@
 import { Module } from '@nestjs/common';
-import { CoreModule } from './core/core.module';
+import { Core3Module } from './core3/core3.module';
 import { FinancesModule } from './finances/finances.module';
+import { LogisticsModule } from './logistics/logistics.module';
+import { MarketingModule } from './marketing/marketing.module';
+import { CoreModule } from './core/core.module';
 
 @Module({
     imports:[
         CoreModule,
-        FinancesModule
+        FinancesModule,
+        LogisticsModule,
+        MarketingModule
     ],
     controllers:[],
     providers:[]

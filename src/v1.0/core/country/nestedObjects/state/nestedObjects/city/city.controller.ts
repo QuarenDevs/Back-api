@@ -15,17 +15,17 @@ export class CityController {
 
     @Get()
     index(@Param('idCountry') idCountry:string, @Param('idState') idState:string): Promise<City[]>  {
-        return this.cityService.getCities();
+        return this.cityService.getCities(idCountry, idState);
     }
 
     @Get(':id')
     show(@Param('idCountry') idCountry:string, @Param('idState') idState:string, @Param('id') id:string):Promise<City>{
-        return this.cityService.getCity(id);
+        return this.cityService.getCity(idCountry, idState, id);
     }
 
     @Post()
     create(@Param('idCountry') idCountry:string, @Param('idState') idState:string, @Body() bodyParams: CreateCity):Promise<City>{
-        return this.cityService.createCity(bodyParams);
+        return this.cityService.createCity(idCountry, idState, bodyParams);
     }
 
     
