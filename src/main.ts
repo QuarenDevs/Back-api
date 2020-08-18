@@ -9,6 +9,8 @@ const port:number = parseInt(process.env.PORT) || 8080;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors();
+
   // Swagger configuration
   const swaggerConfig = new DocumentBuilder()
       .setTitle('App de emprendimiento API')
