@@ -38,8 +38,6 @@ export function createSchema(mgDocument:Type<unknown>) :Schema{
       createdAt: {type: String, default: new Date().toString()},
       updatedAt: {type: String, default: new Date().toString()},
       deletedAt: {type: String, default: null},
-      otherField: {type: Number, default: 777},
-      otherField2: {type: Number, default: 773423437}
     })
 
     schema.statics.getAll = async function (): Promise<Array<Type<unknown>>> {

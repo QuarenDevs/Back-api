@@ -1,14 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ExtendedModel, DocumentAncestor } from 'modules/mongo/ExtendedMongo';
 import { Presentation } from './presentation.mg-document';
 import { CreatePresentation } from './dto/create-presentation.dto';
 import { UpdatePresentation } from './dto/update-presentation.dto';
+import { Product } from '../product/product.mg-document';
 
 @Injectable()
 export class PresentationService {
 
-    constructor(@InjectModel('Presentation') private presentationModel: ExtendedModel<Presentation>)
+    constructor(
+        @InjectModel('Product') private productModel: ExtendedModel<Product>,
+        @InjectModel('Presentation') private presentationModel: ExtendedModel<Presentation>
+        )
     {}
     
     async getAncestors(idPresentation:string ):Promise<DocumentAncestor[]>
@@ -18,9 +22,12 @@ export class PresentationService {
         return ancestors;
     }
 
-    async getPresentations(): Promise<Presentation[]>
+    async getPresentations(idProduct:string): Promise<Presentation[]>
     {
-        return await this.presentationModel.getAll();
+        const product = await this.productModel.findBySID(idProduct);
+
+        //return product.presentations;
+        return null;
     }
 
     async getPresentation(id: string): Promise<Presentation>
@@ -28,9 +35,18 @@ export class PresentationService {
         return await this.presentationModel.findBySID(id);
     }
 
-    async createPresentation(presentation: CreatePresentation):Promise<Presentation>
+    async createPresentation(idProduct:string, presentation: CreatePresentation):Promise<Presentation>
     {
-        const newObject = this.presentationModel.store(presentation);    
+        const product:Product = await this.productModel.findBySID(idProduct) as Product;
+        
+        let newObject = await this.presentationModel.store(presentation);    
+        
+        newObject.product = product._id;
+        newObject = await newObject.save()
+        Logger.log(newObject);
+        product.presentations.push(newObject._id);
+        await product.save();
+
         return await newObject;
     }
     

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ExtendedModel, DocumentAncestor } from 'modules/mongo/ExtendedMongo';
 import { Product } from './product.mg-document';
@@ -8,9 +8,20 @@ import { UpdateProduct } from './dto/update-product.dto';
 @Injectable()
 export class ProductService {
 
+    
     constructor(@InjectModel('Product') private productModel: ExtendedModel<Product>)
     {}
-    
+    // removeNulls(obj) {
+    //     var isArray = obj instanceof Array;
+    //     for (var k in obj) {
+    //     Logger.log(k)
+    //     //   if (obj[k].deletedAt != null) isArray ? obj.splice(k, 1) : delete obj[k];
+    //     //   else if (typeof obj[k] == "object") this.removeNulls(obj[k]);
+    //     //   if (isArray && obj.length == k) this.removeNulls(obj);
+    //     }
+    //     return obj;
+    //   }
+
     async getAncestors(idProduct:string ):Promise<DocumentAncestor[]>
     {
         const product = await this.productModel.findBySID(idProduct);
@@ -25,7 +36,10 @@ export class ProductService {
 
     async getProduct(id: string): Promise<Product>
     {
-        return await this.productModel.findBySID(id);
+        let requested =  await this.productModel.findBySID(id);
+        requested = await requested.populate('presentations').execPopulate();
+        
+        return requested;
     }
 
     async createProduct(product: CreateProduct):Promise<Product>

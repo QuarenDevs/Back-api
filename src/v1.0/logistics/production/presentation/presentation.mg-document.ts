@@ -1,5 +1,8 @@
 import { Schema, Prop } from '@nestjs/mongoose';
+
 import { createSchema, ExtendedDocument } from 'modules/mongo/ExtendedMongo';
+import { Product } from '../product/product.mg-document';
+import { SchemaTypes} from 'mongoose';
 
 
 
@@ -21,8 +24,8 @@ export class Presentation extends ExtendedDocument{
     @Prop()
     value: number;
     
-    //@Prop()
-    //presentations:[Presentation],
+    @Prop({type:SchemaTypes.ObjectId, ref:'Product'})
+    product: string;
     
     @Prop()
     initialDate: string;

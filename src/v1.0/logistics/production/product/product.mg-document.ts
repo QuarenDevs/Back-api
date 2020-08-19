@@ -1,16 +1,12 @@
 import { Schema, Prop } from '@nestjs/mongoose';
 import { createSchema, ExtendedDocument } from 'modules/mongo/ExtendedMongo';
+import { Presentation } from '../presentation/presentation.mg-document';
+import { SchemaTypes } from 'mongoose';
 
 
 
 @Schema({timestamps: true})
 export class Product extends ExtendedDocument{
-
-    // @Prop()
-    // id?: string;
-
-    // @Prop({type: String, default:generateSID()})
-    // sid: string;
 
     @Prop()
     name: string;
@@ -30,7 +26,10 @@ export class Product extends ExtendedDocument{
     @Prop()
     isVisible: boolean;
 
+    @Prop([{type: SchemaTypes.ObjectId, ref: 'Presentation'}])
+    presentations:[string];
     
+
 }
 
 //export const schema = SchemaFactory.createForClass(Product);
