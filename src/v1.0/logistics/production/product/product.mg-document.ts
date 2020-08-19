@@ -9,25 +9,19 @@ import { SchemaTypes } from 'mongoose';
 export class Product extends ExtendedDocument{
 
     @Prop()
+    slug: string;
+
+    @Prop()
     name: string;
     
     @Prop()
-    year: number;
-    
+    description: string;
+
     @Prop()
-    value: number;
-    
-    //@Prop()
-    //presentations:[Presentation],
-    
-    @Prop()
-    initialDate: string;
-    
-    @Prop()
-    isVisible: boolean;
+    image: string;
 
     @Prop([{type: SchemaTypes.ObjectId, ref: 'Presentation'}])
-    presentations:[string];
+    presentations:[Presentation];
     
 
 }

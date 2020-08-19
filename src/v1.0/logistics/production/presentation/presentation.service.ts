@@ -24,10 +24,11 @@ export class PresentationService {
 
     async getPresentations(idProduct:string): Promise<Presentation[]>
     {
-        const product = await this.productModel.findBySID(idProduct);
-
-        //return product.presentations;
-        return null;
+        let product = await this.productModel.findBySID(idProduct);
+        
+        product = await product.populate('presentations').execPopulate();
+        
+        return product.presentations;
     }
 
     async getPresentation(id: string): Promise<Presentation>
@@ -43,7 +44,6 @@ export class PresentationService {
         
         newObject.product = product._id;
         newObject = await newObject.save()
-        Logger.log(newObject);
         product.presentations.push(newObject._id);
         await product.save();
 

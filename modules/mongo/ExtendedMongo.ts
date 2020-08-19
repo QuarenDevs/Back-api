@@ -35,6 +35,7 @@ export function createSchema(mgDocument:Type<unknown>) :Schema{
     schema.add({
       sid: {type: String, default: null},
       createdBy:createdBy,//{ type: SchemaTypes.ObjectId, default:null },
+      isActive: {type: Boolean, default: true},
       createdAt: {type: String, default: new Date().toString()},
       updatedAt: {type: String, default: new Date().toString()},
       deletedAt: {type: String, default: null},

@@ -4,23 +4,8 @@ import { IsString, Min, IsInt, IsOptional } from 'class-validator';
 export class UpdateProduct{
 
     @ApiPropertyOptional({
-        type: Boolean,
-        description: 'Indicates if the asset is visible or not'
-    })
-    @IsOptional()
-    isVisible: boolean;
-
-    
-    @ApiPropertyOptional({
-        type: Date,
-        description: 'Indicates if the asset is visible or not'
-    })
-    @IsOptional()
-    initialDate: string;
-    
-    @ApiPropertyOptional({
         type: String,
-        description: 'Name of the asset',
+        description: 'Name of the product',
         default: ''
     })
     @IsOptional()
@@ -28,21 +13,22 @@ export class UpdateProduct{
     name: string;
 
     @ApiPropertyOptional({
-        type: Number,
-        description: 'Year when the asset was acquired',
-        default: 0
-    })
-    @IsOptional()
-    @IsInt()
-    year: number;
-    
-    @ApiPropertyOptional({
-        type: Number,
-        description: 'Value of the asset. $ COP',
+        type: String,
+        description: 'Description of the product',
         default: ''
     })
     @IsOptional()
-    @Min(1)
-    value: number;
+    @IsString()
+    description: string;
+
+    
+    @ApiPropertyOptional({
+        type: String,
+        description: 'Main picture of the product',
+        default: ''
+    })
+    @IsOptional()
+    @IsString()
+    image: string;
     
 }
