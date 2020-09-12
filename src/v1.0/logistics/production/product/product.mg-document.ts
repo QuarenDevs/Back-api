@@ -8,6 +8,9 @@ import { SchemaTypes } from 'mongoose';
 @Schema({timestamps: true})
 export class Product extends ExtendedDocument{
 
+    @Prop({type:SchemaTypes.ObjectId, ref:'Company'})
+    ownerCompany: string;
+
     @Prop()
     slug: string;
 
