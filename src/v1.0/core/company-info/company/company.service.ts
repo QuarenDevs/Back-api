@@ -25,7 +25,9 @@ export class CompanyService {
 
     async getCompany(id: string): Promise<Company>
     {
-        return await this.companyModel.findBySID(id);
+        let requested = await this.companyModel.findBySID(id);
+        requested = await requested.populate('products').execPopulate();
+        return requested;
     }
 
     async createCompany(company: CreateCompany):Promise<Company>
